@@ -1,12 +1,12 @@
 #include <iostream>
-#include "wss.h"
+#include "include/wss.hpp"
 
 int main(int argc, char* argv[])
 {
     if (argc != 4)
     {
         std::cerr <<
-            "WSS Version " << wsslib_VERSION_MAJOR << "." << wsslib_VERSION_MINOR << std::endl <<
+            "WSS Version " << wssserver_VERSION_MAJOR << "." << wssserver_VERSION_MINOR << std::endl <<
             "Usage: websocket-server-async <address> <port> <threads>\n" <<
             "Example:\n" <<
             "    websocket-server-async 0.0.0.0 8080 1\n";
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     const auto threads = std::max<int>(1, std::atoi(argv[3]));
     boost::asio::io_context ioc{threads};
 
-    boost::make_shared<exchange::listener>(ioc, boost::asio::ip::tcp::endpoint(address, port))->run();
+    boost::make_shared<server_wss::listener>(ioc, boost::asio::ip::tcp::endpoint(address, port))->run();
 
     std::vector<std::thread> v;
     v.reserve(threads);

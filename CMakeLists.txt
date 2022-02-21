@@ -8,8 +8,9 @@ FIND_PACKAGE( Boost 1.78 COMPONENTS program_options REQUIRED )
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
-include_directories(websocket-server/libwss)
+#include_directories(websocket-server)
+add_subdirectory(websocket-server)
 
 add_executable(exchange-server main.cpp)
 
-TARGET_LINK_LIBRARIES(exchange-server LINK_PUBLIC ${Boost_LIBRARIES} Threads::Threads ${Boost_LIBRARIES}  boost_system boost_thread)
+TARGET_LINK_LIBRARIES(exchange-server PUBLIC wssserver PUBLIC ${Boost_LIBRARIES} Threads::Threads ${Boost_LIBRARIES}  boost_system boost_thread)
